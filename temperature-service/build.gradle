@@ -8,6 +8,7 @@ dependencies {
   implementation "ch.qos.logback:logback-classic:1.2.3"
 
   implementation "io.vertx:vertx-web"
+  implementation "io.vertx:vertx-web-client"
   implementation "io.vertx:vertx-lang-kotlin"
   implementation "io.github.jponge:vertx-boot:0.0.1"
 
