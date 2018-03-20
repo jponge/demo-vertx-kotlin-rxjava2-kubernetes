@@ -31,7 +31,7 @@ class HttpServerVerticle : AbstractVerticle() {
           logger.info("HTTP server running on port ${port}")
           startFuture.complete()
         } else {
-          logger.info("HTTP server could not be started on port ${port}", it.cause())
+          logger.error("HTTP server could not be started on port ${port}", it.cause())
           startFuture.fail(it.cause())
         }
       }

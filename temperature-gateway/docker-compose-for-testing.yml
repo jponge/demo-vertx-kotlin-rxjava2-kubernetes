@@ -1,0 +1,14 @@
+version: '3'
+services:
+  temp1:
+    image: "temperature-service"
+    ports:
+      - "6000:8080"
+  temp2:
+    image: "temperature-service"
+    ports:
+      - "6001:8080"
+  temp3:
+    image: "temperature-service"
+    ports:
+      - "6002:8080"
