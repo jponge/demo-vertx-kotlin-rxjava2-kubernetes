@@ -1,0 +1,21 @@
+plugins {
+  id 'com.github.ben-manes.versions' version '0.17.0'
+}
+
+subprojects {
+
+  repositories {
+    mavenCentral()
+  }
+
+  group 'io.github.jponge'
+  version '0.0.1-SNAPSHOT'
+
+  ext {
+    vertxVersion = '3.5.1'
+  }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '4.6'
+}
