@@ -3,7 +3,6 @@ package io.github.jponge.temperature.gateway
 import io.reactivex.rxkotlin.subscribeBy
 import io.vertx.kotlin.core.json.json
 import io.vertx.kotlin.core.json.obj
-import io.vertx.kotlin.servicediscovery.Record
 import io.vertx.reactivex.core.AbstractVerticle
 import io.vertx.reactivex.servicediscovery.ServiceDiscovery
 import io.vertx.reactivex.servicediscovery.types.HttpEndpoint

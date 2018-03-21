@@ -4,13 +4,11 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import io.vertx.core.Future
-import io.vertx.core.http.HttpClient
 import io.vertx.core.json.JsonArray
 import io.vertx.kotlin.core.json.JsonObject
 import io.vertx.kotlin.core.json.json
 import io.vertx.kotlin.core.json.obj
 import io.vertx.reactivex.core.AbstractVerticle
-import io.vertx.reactivex.core.RxHelper
 import io.vertx.reactivex.ext.web.Router
 import io.vertx.reactivex.ext.web.RoutingContext
 import io.vertx.reactivex.ext.web.client.WebClient
@@ -19,7 +17,6 @@ import io.vertx.reactivex.servicediscovery.ServiceDiscovery
 import io.vertx.reactivex.servicediscovery.ServiceReference
 import io.vertx.servicediscovery.kubernetes.KubernetesServiceImporter
 import org.slf4j.LoggerFactory
-import java.util.concurrent.TimeUnit
 
 class GatewayVerticle : AbstractVerticle() {
 
