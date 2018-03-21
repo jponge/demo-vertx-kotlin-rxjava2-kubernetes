@@ -1,0 +1,15 @@
+plugins {
+  id 'com.moowork.node' version '1.2.0'
+}
+
+task build(type: YarnTask) {
+  inputs.file("package.json")
+  inputs.file("yarn.lock")
+  inputs.dir("src")
+  outputs.dir("dist")
+  args = ["build"]
+}
+
+task clean(type: Delete) {
+  delete "dist"
+}

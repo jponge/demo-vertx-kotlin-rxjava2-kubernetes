@@ -3,5 +3,7 @@ rootProject.name = 'demo-vertx-kotlin-rxjava2-kubernetes'
 include 'temperature-service'
 include 'temperature-gateway'
 
+include 'zlack/frontend'
+
 include 'zlack/backend'
 project(':zlack/backend').name = 'zlack'
