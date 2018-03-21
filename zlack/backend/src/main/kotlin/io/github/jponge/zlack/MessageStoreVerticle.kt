@@ -40,6 +40,13 @@ class MessageStoreVerticle : AbstractVerticle() {
         onSuccess = { id ->
           logger.info("Stored: id=${id} - ${cmd.body().encode()}")
           cmd.reply(json { obj("id" to id) })
+          vertx.eventBus().publish("events.new-message", json {
+            obj(
+              "id" to id,
+              "author" to cmd.body().getString("author"),
+              "content" to cmd.body().getString("content")
+            )
+          })
         },
         onError = { err ->
           logger.error("Could not store ${cmd.body().encode()}", err.cause)
