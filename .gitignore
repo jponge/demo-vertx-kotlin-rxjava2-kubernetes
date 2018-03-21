@@ -19,13 +19,13 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+out/
+bin/
 
 # Eclipse / VSCode Java
 .project
 .classpath
 .settings
-vertx-app/bin
-vertx-app/out
 
 # Gradle
 build
