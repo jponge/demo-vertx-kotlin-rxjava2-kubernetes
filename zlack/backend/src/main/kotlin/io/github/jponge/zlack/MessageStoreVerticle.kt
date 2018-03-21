@@ -53,6 +53,7 @@ class MessageStoreVerticle : AbstractVerticle() {
         jsonObjects.map { obj ->
           json {
             obj(
+              "id" to obj.getString("_id"),
               "author" to obj.getString("author", "???"),
               "content" to obj.getString("content", "")
             )
