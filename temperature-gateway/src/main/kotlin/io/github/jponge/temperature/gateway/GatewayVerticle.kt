@@ -20,12 +20,12 @@ import org.slf4j.LoggerFactory
 
 class GatewayVerticle : AbstractVerticle() {
 
-  val logger = LoggerFactory.getLogger(GatewayVerticle::class.java)
+  private val logger = LoggerFactory.getLogger(GatewayVerticle::class.java)
 
-  lateinit var discovery: ServiceDiscovery
+  private lateinit var discovery: ServiceDiscovery
 
-  var serviceReferences = mutableListOf<ServiceReference>()
-  var webClients = mutableListOf<WebClient>()
+  private var serviceReferences = mutableListOf<ServiceReference>()
+  private var webClients = mutableListOf<WebClient>()
 
   override fun start(startFuture: Future<Void>) {
     val port = config().getString("http-port", "8080").toInt()
@@ -47,13 +47,15 @@ class GatewayVerticle : AbstractVerticle() {
     vertx.createHttpServer()
       .requestHandler(router::accept)
       .rxListen(port)
-      .subscribeBy(onSuccess = {
-        logger.info("HTTP server running on port ${port}")
-        startFuture.complete()
-      }, onError = {
-        logger.error("HTTP server could not be started on port ${port}", it)
-        startFuture.fail(it)
-      })
+      .subscribeBy(
+        onSuccess = {
+          logger.info("HTTP server running on port ${port}")
+          startFuture.complete()
+        },
+        onError = {
+          logger.error("HTTP server could not be started on port ${port}", it)
+          startFuture.fail(it)
+        })
   }
 
   private fun discoverServices() {
@@ -87,13 +89,15 @@ class GatewayVerticle : AbstractVerticle() {
     }.toList()
 
     val responses = JsonArray()
-    Single.merge(requests)
-      .subscribeBy(onNext = {
+    Single.merge(requests).subscribeBy(
+      onNext = {
         responses.add(it.body())
-      }, onError = {
+      },
+      onError = {
         logger.error("Error while talking to the services", it)
         context.response().setStatusCode(500).end()
-      }, onComplete = {
+      },
+      onComplete = {
         val payload = json {
           obj("temperatures" to responses)
         }

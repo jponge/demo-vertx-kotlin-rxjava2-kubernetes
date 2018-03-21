@@ -27,13 +27,15 @@ class HttpServerVerticle : AbstractVerticle() {
     vertx.createHttpServer()
       .requestHandler(router::accept)
       .rxListen(port)
-      .subscribeBy(onSuccess = {
-        logger.info("HTTP server running on port ${port}")
-        startFuture.complete()
-      }, onError = {
-        logger.error("HTTP server could not be started on port ${port}", it)
-        startFuture.fail(it)
-      })
+      .subscribeBy(
+        onSuccess = {
+          logger.info("HTTP server running on port ${port}")
+          startFuture.complete()
+        },
+        onError = {
+          logger.error("HTTP server could not be started on port ${port}", it)
+          startFuture.fail(it)
+        })
   }
 
   private val emptyJson = json { obj() }
@@ -41,12 +43,14 @@ class HttpServerVerticle : AbstractVerticle() {
   private fun getAllMessages(context: RoutingContext) {
     vertx.eventBus()
       .rxSend<JsonObject>("messages.get-all", emptyJson)
-      .subscribeBy(onSuccess = { reply ->
-        context.response()
-          .setStatusCode(200)
-          .putHeader("Content-Type", "application/json")
-          .end(reply.body().encode())
-      }, onError = { context.fail(500) })
+      .subscribeBy(
+        onSuccess = { reply ->
+          context.response()
+            .setStatusCode(200)
+            .putHeader("Content-Type", "application/json")
+            .end(reply.body().encode())
+        },
+        onError = { context.fail(500) })
   }
 
   private fun postNewMessage(context: RoutingContext) {
@@ -59,11 +63,13 @@ class HttpServerVerticle : AbstractVerticle() {
 
     vertx.eventBus()
       .rxSend<JsonObject>("messages.store", payload)
-      .subscribeBy(onSuccess = { reply ->
-        context.response()
-          .setStatusCode(201)
-          .putHeader("Content-Type", "application/json")
-          .end(reply.body().encode())
-      }, onError = { context.fail(500) })
+      .subscribeBy(
+        onSuccess = { reply ->
+          context.response()
+            .setStatusCode(201)
+            .putHeader("Content-Type", "application/json")
+            .end(reply.body().encode())
+        },
+        onError = { context.fail(500) })
   }
 }

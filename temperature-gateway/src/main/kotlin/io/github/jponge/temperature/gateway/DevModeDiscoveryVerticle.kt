@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory
 
 class DevModeDiscoveryVerticle : AbstractVerticle() {
 
-  val logger = LoggerFactory.getLogger(DevModeDiscoveryVerticle::class.java)
+  private val logger = LoggerFactory.getLogger(DevModeDiscoveryVerticle::class.java)
 
   override fun start() {
     logger.info("Service discovery for development purposes, manually injecting references")
@@ -30,10 +30,12 @@ class DevModeDiscoveryVerticle : AbstractVerticle() {
       .rxPublish(s1)
       .flatMap { discovery.rxPublish(s2) }
       .flatMap { discovery.rxPublish(s3) }
-      .subscribeBy(onSuccess = {
-        logger.info("All 3 local services have been published")
-      }, onError = {
-        logger.error("Error while publishing a service", it)
-      })
+      .subscribeBy(
+        onSuccess = {
+          logger.info("All 3 local services have been published")
+        },
+        onError = {
+          logger.error("Error while publishing a service", it)
+        })
   }
 }

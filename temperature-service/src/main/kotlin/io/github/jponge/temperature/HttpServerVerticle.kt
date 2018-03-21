@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory
 
 class HttpServerVerticle : AbstractVerticle() {
 
-  val logger = LoggerFactory.getLogger(HttpServerVerticle::class.java)
+  private val logger = LoggerFactory.getLogger(HttpServerVerticle::class.java)
 
-  var latestTemperatureInfo = JsonObject()
+  private var latestTemperatureInfo = JsonObject()
 
   override fun start(startFuture: Future<Void>) {
     val port = config().getString("http-port", "8080").toInt()

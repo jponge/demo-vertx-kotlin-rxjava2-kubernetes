@@ -36,10 +36,11 @@ class MessageStoreVerticle : AbstractVerticle() {
 
   private fun store(cmd: Message<JsonObject>) {
     client.rxInsert(MONGO_COLLECTION, cmd.body())
-      .subscribeBy(onSuccess = { id ->
-        logger.info("Stored: id=${id} - ${cmd.body().encode()}")
-        cmd.reply(json { obj("id" to id) })
-      },
+      .subscribeBy(
+        onSuccess = { id ->
+          logger.info("Stored: id=${id} - ${cmd.body().encode()}")
+          cmd.reply(json { obj("id" to id) })
+        },
         onError = { err ->
           logger.error("Could not store ${cmd.body().encode()}", err.cause)
           cmd.fail(1, err.message)
@@ -59,12 +60,14 @@ class MessageStoreVerticle : AbstractVerticle() {
         }
       }
       .map { json { obj("messages" to it) } }
-      .subscribeBy(onSuccess = { messages ->
-        logger.info("Retrieved ${messages.getJsonArray("messages").size()} messages")
-        cmd.reply(messages)
-      }, onError = { err ->
-        logger.error("Could not retrieve messages", err)
-        cmd.fail(2, err.message)
-      })
+      .subscribeBy(
+        onSuccess = { messages ->
+          logger.info("Retrieved ${messages.getJsonArray("messages").size()} messages")
+          cmd.reply(messages)
+        },
+        onError = { err ->
+          logger.error("Could not retrieve messages", err)
+          cmd.fail(2, err.message)
+        })
   }
 }

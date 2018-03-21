@@ -8,10 +8,10 @@ import java.util.*
 
 class TemperatureVerticle : AbstractVerticle() {
 
-  val uuid = UUID.randomUUID().toString()
-  val logger = LoggerFactory.getLogger(TemperatureVerticle::class.java)
+  private val uuid = UUID.randomUUID().toString()
+  private val logger = LoggerFactory.getLogger(TemperatureVerticle::class.java)
 
-  var temperature: Double = 21.0
+  private var temperature: Double = 21.0
 
   override fun start() {
     val delta = config().getString("temp-delta", "0.1").toDouble()
