@@ -35,3 +35,12 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     jvmTarget = "1.8"
   }
 }
+
+task copyVueApp(type: Copy, dependsOn: tasks.getByPath(':zlack/frontend:build')) {
+  description 'Copy the build from vue app to the vertx app build resources'
+  group 'Build'
+  from "${rootDir}/zlack/frontend/dist"
+  into "${rootDir}/zlack/backend/build/resources/main/webroot"
+}
+
+shadowJar.dependsOn(tasks.getByPath(":zlack:copyVueApp"))

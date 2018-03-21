@@ -11,6 +11,7 @@ import io.vertx.reactivex.core.AbstractVerticle
 import io.vertx.reactivex.ext.web.Router
 import io.vertx.reactivex.ext.web.RoutingContext
 import io.vertx.reactivex.ext.web.handler.BodyHandler
+import io.vertx.reactivex.ext.web.handler.StaticHandler
 import io.vertx.reactivex.ext.web.handler.sockjs.SockJSHandler
 import org.slf4j.LoggerFactory
 
@@ -33,6 +34,8 @@ class HttpServerVerticle : AbstractVerticle() {
       outboundPermitteds = listOf(PermittedOptions(addressRegex = ".*"))) // ⚠
     sockJSHandler.bridge(options)
     router.route("/eventbus/*").handler(sockJSHandler)
+
+    router.route().handler(StaticHandler.create().setCachingEnabled(false))
 
     vertx.createHttpServer()
       .requestHandler(router::accept)
