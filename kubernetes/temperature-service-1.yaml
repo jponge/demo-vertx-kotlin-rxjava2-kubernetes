@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: temperature-service-1
+  labels:
+    app: temperature-service
+    runtime: java
+spec:
+  type: LoadBalancer
+  selector:
+    app: temperature-service-1
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: temperature-service-1
+  labels:
+    app: temperature-service-1
+    runtime: java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: temperature-service-1
+  template:
+    metadata:
+      labels:
+        app: temperature-service-1
+        runtime: java
+    spec:
+      containers:
+      - name: temperature-service-1
+        image: temperature-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
