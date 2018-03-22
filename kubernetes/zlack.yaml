@@ -13,6 +13,7 @@ spec:
   - protocol: TCP
     port: 8080
     targetPort: 8080
+  sessionAffinity: ClientIP
 ---
 apiVersion: apps/v1
 kind: Deployment
