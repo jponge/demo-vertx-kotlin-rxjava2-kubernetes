@@ -12,7 +12,7 @@ for service in "${Services[@]}"; do
   cd ..
 done
 
-K8sResources=('mongo' 'zlack' 'temperature-service-1' 'temperature-service-2' 'temperature-service-3' 'temperature-gateway')
+K8sResources=('mongo' 'zlack' 'temperature-service-1' 'temperature-service-2' 'temperature-service-3' 'temperature-gateway' 'temperature-to-zlack-service')
 
 for yaml in "${K8sResources[@]}"; do
   kubectl apply -f kubernetes/${yaml}.yaml
