@@ -4,7 +4,7 @@
 
     <div class="field is-grouped">
       <p class="control">
-        <input class="input" v-model="author" v-bind:class="{ 'is-danger' : authorEmpty }" type="text" placeholder="Your name">
+        <input class="input" v-model="author" v-bind:class="{ 'is-danger' : authorEmpty }" type="text" placeholder="Your name" autofocus>
       </p>
     </div>
     <div class="field is-grouped">
