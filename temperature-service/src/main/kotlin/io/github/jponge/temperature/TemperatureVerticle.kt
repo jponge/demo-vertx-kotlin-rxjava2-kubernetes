@@ -32,6 +32,10 @@ class TemperatureVerticle : AbstractVerticle() {
         })
       }
     }
+
+    vertx.eventBus().consumer<Double>("temperature.backdoor") {
+      temperature = it.body()
+    }
   }
 
   private fun updateTemperature(random: Random, delta: Double) =

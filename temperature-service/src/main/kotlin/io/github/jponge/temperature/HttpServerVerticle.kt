@@ -23,6 +23,7 @@ class HttpServerVerticle : AbstractVerticle() {
 
     val router = Router.router(vertx)
     router.get("/api/temperature").handler(this::giveTemperature)
+    router.put("/api/temperature/:value").handler(this::backdoor)
 
     vertx.createHttpServer()
       .requestHandler(router::accept)
@@ -47,5 +48,12 @@ class HttpServerVerticle : AbstractVerticle() {
         .putHeader("Content-Type", "application/json")
         .end(latestTemperatureInfo.encode())
     }
+  }
+
+  private fun backdoor(context: RoutingContext) {
+    val temperature = context.request().getParam("value").toDouble()
+    logger.info("Backdoor to update the temperature to ${temperature}")
+    vertx.eventBus().send("temperature.backdoor", temperature)
+    context.response().end()
   }
 }
