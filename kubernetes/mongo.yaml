@@ -6,26 +6,14 @@ metadata:
     app: mongo
     runtime: native
 spec:
-  type: ClusterIP
   selector:
     app: mongo
   ports:
   - protocol: TCP
     port: 27017
     targetPort: 27017
+  clusterIP: None
 ---
-#apiVersion: v1
-#kind: PersistentVolume
-#metadata:
-#  name: mongo-volume
-#spec:
-#  accessModes:
-#    - ReadWriteOnce
-#  capacity:
-#    storage: 3Gi
-#  hostPath:
-#    path: /data/mongo/
-#---
 apiVersion: apps/v1beta2
 kind: StatefulSet
 metadata:

@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: zlack
+  labels:
+    app: zlack
+    runtime: java
+spec:
+  type: LoadBalancer
+  selector:
+    app: zlack
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: zlack
+  labels:
+    app: zlack
+    runtime: java
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: zlack
+  template:
+    metadata:
+      labels:
+        app: zlack
+        runtime: java
+    spec:
+      containers:
+      - name: zlack
+        image: zlack:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080

@@ -25,6 +25,8 @@ class MessageStoreVerticle : AbstractVerticle() {
 
     client = MongoClient.createShared(vertx, json {
       obj(
+        "host" to host,
+        "port" to port,
         "db_name" to "zlack",
         "useObjectId" to true
       )
