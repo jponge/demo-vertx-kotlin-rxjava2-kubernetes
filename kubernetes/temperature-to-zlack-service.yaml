@@ -1,0 +1,22 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: temperature-to-zlack-service
+  labels:
+    app: temperature-to-zlack-service
+    runtime: java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: temperature-to-zlack-service
+  template:
+    metadata:
+      labels:
+        app: temperature-to-zlack-service
+        runtime: java
+    spec:
+      containers:
+      - name: temperature-to-zlack-service
+        image: temperature-to-zlack-service:latest
+        imagePullPolicy: IfNotPresent

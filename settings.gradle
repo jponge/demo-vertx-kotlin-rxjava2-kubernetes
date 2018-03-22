@@ -7,3 +7,5 @@ include 'zlack/frontend'
 
 include 'zlack/backend'
 project(':zlack/backend').name = 'zlack'
+
+include 'temperature-to-zlack-service'
