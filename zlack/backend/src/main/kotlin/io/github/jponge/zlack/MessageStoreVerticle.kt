@@ -1,7 +1,6 @@
 package io.github.jponge.zlack
 
 import io.reactivex.rxkotlin.subscribeBy
-import io.vertx.core.json.Json
 import io.vertx.core.json.JsonObject
 import io.vertx.kotlin.core.json.json
 import io.vertx.kotlin.core.json.obj
@@ -9,6 +8,7 @@ import io.vertx.reactivex.core.AbstractVerticle
 import io.vertx.reactivex.core.eventbus.Message
 import io.vertx.reactivex.ext.mongo.MongoClient
 import org.slf4j.LoggerFactory
+import java.time.Instant
 
 class MessageStoreVerticle : AbstractVerticle() {
 
@@ -37,7 +37,9 @@ class MessageStoreVerticle : AbstractVerticle() {
   }
 
   private fun store(cmd: Message<JsonObject>) {
-    client.rxInsert(MONGO_COLLECTION, cmd.body())
+    val now = Instant.now().epochSecond
+    val documentWithTimestamp = cmd.body().copy().put("timestamp", System.currentTimeMillis())
+    client.rxInsert(MONGO_COLLECTION, documentWithTimestamp)
       .subscribeBy(
         onSuccess = { id ->
           logger.info("Stored: id=${id} - ${cmd.body().encode()}")
@@ -46,7 +48,8 @@ class MessageStoreVerticle : AbstractVerticle() {
             obj(
               "id" to id,
               "author" to cmd.body().getString("author"),
-              "content" to cmd.body().getString("content")
+              "content" to cmd.body().getString("content"),
+              "timestamp" to now
             )
           })
         },
@@ -64,7 +67,8 @@ class MessageStoreVerticle : AbstractVerticle() {
             obj(
               "id" to obj.getString("_id"),
               "author" to obj.getString("author", "???"),
-              "content" to obj.getString("content", "")
+              "content" to obj.getString("content", ""),
+              "timestamp" to obj.getLong("timestamp", System.currentTimeMillis())
             )
           }
         }

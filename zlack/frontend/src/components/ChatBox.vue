@@ -24,9 +24,10 @@
     </div>
 
     <div>
-      <p v-for="message in messages" :key="message.id">
-        <strong>{{ message.author }}:</strong>
-        {{ message.content }}
+      <p class="chat-line" v-for="message in messages" :key="message.id">
+        <span class="has-text-grey-light">{{ new Date(message.timestamp).toLocaleTimeString() }}</span>
+        <span class="has-text-weight-semibold">{{ message.author }}:</span>
+        <span>{{ message.content }}</span>
       </p>
     </div>
 
@@ -89,9 +90,11 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .container {
-  margin-top: 1em;
+  margin: 1em;
+}
+.chat-line > span {
+  padding-right: 0.33em;
 }
 </style>
