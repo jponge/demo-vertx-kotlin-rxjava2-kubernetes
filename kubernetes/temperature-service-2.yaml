@@ -14,7 +14,7 @@ spec:
     port: 8080
     targetPort: 8080
 ---
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: temperature-service-2

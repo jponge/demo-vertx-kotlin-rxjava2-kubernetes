@@ -16,6 +16,12 @@ subprojects {
   }
 }
 
+task deployToKube(type: Exec) {
+  description 'Build Docker images and create all Kubernetes resources'
+  group 'Deployment'
+  commandLine = './deploy-to-kube.sh'
+}
+
 task wrapper(type: Wrapper) {
   gradleVersion = '4.6'
 }
