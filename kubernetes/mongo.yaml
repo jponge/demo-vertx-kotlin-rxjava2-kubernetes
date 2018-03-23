@@ -42,6 +42,22 @@ spec:
         volumeMounts:
         - name: mongo-volume
           mountPath: /data/db
+        livenessProbe:
+          exec:
+            command:
+            - mongo
+            - --eval
+            - "db.adminCommand('ping')"
+          initialDelaySeconds: 15
+          periodSeconds: 30
+        readinessProbe:
+          exec:
+            command:
+            - mongo
+            - --eval
+            - "db.adminCommand('ping')"
+          initialDelaySeconds: 5
+          periodSeconds: 15
   volumeClaimTemplates:
   - metadata:
       name: mongo-volume
