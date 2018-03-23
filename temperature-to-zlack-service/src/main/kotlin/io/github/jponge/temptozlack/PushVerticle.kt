@@ -17,6 +17,7 @@
 package io.github.jponge.temptozlack
 
 import io.vertx.core.buffer.Buffer
+import io.vertx.core.http.HttpServer
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.client.HttpResponse
 import io.vertx.ext.web.client.WebClient
@@ -26,6 +27,8 @@ import io.vertx.kotlin.core.json.obj
 import io.vertx.kotlin.coroutines.CoroutineVerticle
 import io.vertx.kotlin.coroutines.awaitEvent
 import io.vertx.kotlin.coroutines.awaitResult
+import io.vertx.kotlin.coroutines.dispatcher
+import kotlinx.coroutines.experimental.launch
 import org.slf4j.LoggerFactory
 import kotlin.math.roundToInt
 
@@ -36,6 +39,14 @@ class PushVerticle : CoroutineVerticle() {
   override suspend fun start() {
     logger.info("Starting")
     val webClient = WebClient.create(vertx)
+
+    awaitResult<HttpServer> {
+      vertx.createHttpServer().requestHandler { req ->
+        logger.info("Liveness check")
+        req.response().end("Ok")
+      }.listen(3000, it)
+    }
+    logger.info("HTTP server on port 3000 is for liveness probes")
 
     while (true) {
       try {

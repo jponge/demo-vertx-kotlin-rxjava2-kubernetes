@@ -20,3 +20,11 @@ spec:
       - name: temperature-to-zlack-service
         image: temperature-to-zlack-service:latest
         imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 30

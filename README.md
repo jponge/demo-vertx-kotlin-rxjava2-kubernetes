@@ -13,7 +13,7 @@ This repository contains several reactive services to be deployed in Kubernetes.
    _(Vert.x web / web client / SockJS event bus bridge / RxJava 2 / MongoDB / VueJS)_ 
 4. [temperature-to-zlack-service](temperature-to-zlack-service) is a service that gathers all temperatures from the gateway, and notifies in the Zlack chat of all sensors having a temperature above a threshold.
    It uses Kotlin coroutines to show how a more traditional _"synchronous-style"_ programming model can be used to coordinate operations.
-   _(Vert.x web client / Kotlin coroutines)_
+   _(Vert.x web client / Kotlin coroutines / minimal liveness reporting)_
 
 The [kubernetes](kubernetes) folder contains resource descriptors and notes for Kubernetes and `minikube`.
 
