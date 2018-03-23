@@ -79,6 +79,7 @@ class GatewayVerticle : AbstractVerticle() {
       })
   }
 
+  // TODO: add resiliency on HTTP errors
   private fun fetchAllAvailableTemperatures(context: RoutingContext) {
     logger.info("Request from ${context.request().remoteAddress()}")
 
