@@ -15,11 +15,17 @@ This repository contains several reactive services to be deployed in Kubernetes.
    It uses Kotlin coroutines to show how a more traditional _"synchronous-style"_ programming model can be used to coordinate operations.
    _(Vert.x web client / Kotlin coroutines)_
 
-## Building and deploying
+## Building
 
 Building all services should be as simple as:
 
-    ./gradlew shadowJar
+    ./gradlew assemble
+
+While developing a Vert.x service you can have live-reload, as in:
+
+    ./gradlew :temperature-gateway:vertxRun
+
+# Deploying
 
 _The following assumes a local testing environment with `minikube`._
 
