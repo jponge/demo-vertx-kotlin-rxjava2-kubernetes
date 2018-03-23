@@ -15,7 +15,7 @@ This repository contains several reactive services to be deployed in Kubernetes.
    It uses Kotlin coroutines to show how a more traditional _"synchronous-style"_ programming model can be used to coordinate operations.
    _(Vert.x web client / Kotlin coroutines)_
 
-The [kubernetes] folder contains resource descriptors and notes for Kubernetes and `minikube`.
+The [kubernetes](kubernetes) folder contains resource descriptors and notes for Kubernetes and `minikube`.
 
 ## Building
 
