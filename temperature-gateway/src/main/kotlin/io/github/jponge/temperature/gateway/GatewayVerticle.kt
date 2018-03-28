@@ -111,7 +111,7 @@ class GatewayVerticle : AbstractVerticle() {
       },
       onError = {
         logger.error("Error while talking to the services", it)
-        context.response().setStatusCode(500).end()
+        context.fail(500)
       },
       onComplete = {
         val payload = json {
